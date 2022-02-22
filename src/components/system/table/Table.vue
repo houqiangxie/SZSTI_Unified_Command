@@ -17,7 +17,7 @@
 						@mouseup="handleMouseUp"
 						@contextmenu.prevent.stop="handleContendMenu"
 					>
-					<!-- {{ row }}--{{ col }} -->
+					{{ row }}--{{ col }}
 					</td>
 				</tr>
 			</tbody>
@@ -64,10 +64,10 @@ const startY = ref(-1)
 const endX = ref(-1)
 const endY = ref(-1)
 const showMenu = ref(false)
-let contextPos = {
+let contextPos = reactive({
 	l: 0,
 	t: 0
-}
+})
 
 const hiddenTdMaps = computed(() => {
 	let hiddenTdMaps = {}

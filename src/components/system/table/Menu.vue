@@ -20,26 +20,26 @@ const props = defineProps({
         name: '拆分',
         code: 'split'
       },
-      {
-        name: '删除行',
-        code: 'delRow'
-      },
-      {
-        name: '删除列',
-        code: 'delCol'
-      },
-      {
-        name: '添加行',
-        code: 'addRow'
-      },
-      {
-        name: '添加列',
-        code: 'addCol'
-      },
-      {
-        name: '清空选择',
-        code: 'clearSelection'
-      }
+      // {
+      //   name: '删除行',
+      //   code: 'delRow'
+      // },
+      // {
+      //   name: '删除列',
+      //   code: 'delCol'
+      // },
+      // {
+      //   name: '添加行',
+      //   code: 'addRow'
+      // },
+      // {
+      //   name: '添加列',
+      //   code: 'addCol'
+      // },
+      // {
+      //   name: '清空选择',
+      //   code: 'clearSelection'
+      // }
     ]
   },
   parentTableData: {

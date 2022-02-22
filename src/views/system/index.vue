@@ -1,12 +1,15 @@
 <template>
     <div>
-        <Table/>
+        <div class="grid grid-cols-3">
+            <div class="span-1"><Table class="w-full" /></div>
+            <div class="span-1"></div>
+            <div class="span-1"><Table  class="w-full"/></div>
+        </div>
         <draggable v-model="likeList" item-key="id">
             <template #item="{ element }">
                 <div class="item">{{ element.id + "、" + element.name }}</div>
             </template>
         </draggable>
-
     </div>
 </template>
 
