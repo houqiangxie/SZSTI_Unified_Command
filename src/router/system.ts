@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "System",
-    component: system,
+    component: () => import("@/views/system/index.vue"),
   },
   {
     path: "/systemA",

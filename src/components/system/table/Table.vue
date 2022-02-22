@@ -1,11 +1,11 @@
 <template>
 	<div class="container">
 		<Menu v-if="showMenu" :contextPos="contextPos" @menyItemCmd="menyItemCmd" />
-		<table class="table">
+		<table class="table droppable-box">
 			<tbody class="table-body">
 				<tr class="table-list" v-for="(row, index) in tableData.rows" :key="index">
 					<td
-						class="table-item"
+						class="table-item droppable"
 						v-for="(col, index) in tableData.cols"
 						:class="{ selected: selectedCells.includes((row - 1) * tableData.cols + col - 1) }"
 						:key="index"
@@ -16,15 +16,31 @@
 						@mouseenter.stop.prevent="handleCellMouseenter(row, col)"
 						@mouseup="handleMouseUp"
 						@contextmenu.prevent.stop="handleContendMenu"
+						@dragover.prevent.stop="e => dragOver(e)"
+						@dragleave.prevent.stop="e => dragLeave(e,)"
+						@dragenter.prevent.stop="e => dragEnter(e,)"
+						@drop.prevent.stop="e => dragDrop(e, row, col)"
 					>
-					{{ row }}--{{ col }}
+					<!-- {{tableData.layoutDetail[(row - 1) * tableData.cols + col - 1] && tableData.layoutDetail[(row - 1) * tableData.cols + col - 1]['value']}} -->
+							<!-- <component
+							:is="tableData.layoutDetail[(row - 1) * tableData.cols + col - 1] && tableData.layoutDetail[(row - 1) * tableData.cols + col - 1]['value']"
+							v-bind="tableData.layoutDetail[(row - 1) * tableData.cols + col - 1] && tableData.layoutDetail[(row - 1) * tableData.cols + col - 1].props"
+							v-on="tableData.layoutDetail[(row - 1) * tableData.cols + col - 1] && tableData.layoutDetail[(row - 1) * tableData.cols + col - 1].event"
+							></component
+							> -->
+							<component
+							:is="'EventList'"
+							></component
+							>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+	
 </template>
 <script setup lang="ts">
+const EventList = import.meta.globEager('/src/components/system/moduleComponentList/EventList.vue')
 // 这块其实初始设置 tableData： {cols: 3, rows: 2} 就可以 把tabelDate设置成计算属性，layoutDetail 用js生成更方便
 const tableData = reactive({
 	cols: 3,
@@ -32,7 +48,7 @@ const tableData = reactive({
 	layoutDetail: [
 		{
 			colSpan: 1,
-			rowSpan: 1,
+			rowSpan: 2,
 		},
 		{
 			colSpan: 1,
@@ -74,6 +90,7 @@ const clearSelection = () => {
 }
 const changeShowMenu = () => {
 	showMenu.value = !showMenu.value
+	
 }
 const isNeedShow = (row, col) => {
 	let hiddenTdMapss = {}
@@ -110,6 +127,7 @@ const handleCellMousedown = (e, x, y) => {
 	selectionHold.value = cellIndex
 }
 const handleCellMouseenter = (x, y) => {
+	
 	if (selectionHold.value !== -1) {
 		endX.value = x
 		endY.value = y
@@ -190,6 +208,49 @@ const menyItemCmd = (cmd) => {
 	}
 	changeShowMenu()
 }
+
+	// 查询draggable和droppable
+const draggables = document.querySelectorAll('.draggable');
+let current = ''
+function dragStart(e) {
+	current=e.target.dataset.name;
+}
+
+function dragEnd() {
+  this.className = 'draggable';
+}
+
+// 监听draggable的相关事件
+for (const draggable of draggables) {
+	draggable.addEventListener('dragstart', dragStart);
+	draggable.addEventListener('dragend', dragEnd);
+}
+
+const  dragOver=(e)=> {
+	
+//   e.preventDefault();
+}
+
+function dragEnter(e) {
+	
+//   e.preventDefault();
+}
+
+function dragLeave(e) {
+}
+
+function dragDrop(e,row, col) {
+	tableData.layoutDetail[(row - 1) * tableData.cols + col - 1].value=current;
+	console.log('current: ', current);
+}
+
+
+
+onMounted(()=>{
+
+
+})
+
 </script>
 
 <style lang='less'>
