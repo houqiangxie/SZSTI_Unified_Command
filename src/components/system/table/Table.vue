@@ -69,8 +69,14 @@ let contextPos = reactive({
 	t: 0
 })
 
-const hiddenTdMaps = computed(() => {
-	let hiddenTdMaps = {}
+const clearSelection = () => {
+	selectedCells.value = []
+}
+const changeShowMenu = () => {
+	showMenu.value = !showMenu.value
+}
+const isNeedShow = (row, col) => {
+	let hiddenTdMapss = {}
 	for (let i = 0; i < tableData.rows; i++) {
 		for (let j = 0; j < tableData.cols; j++) {
 			if (tableData.layoutDetail[i * tableData.cols + j]) {
@@ -79,23 +85,14 @@ const hiddenTdMaps = computed(() => {
 					for (let row = i; row < i + (colInfo.rowSpan || 1); row++) {
 						// col = (row === i ? j + 1 : j) 是为了避开自己
 						for (let col = (row === i ? j + 1 : j); col < (j + (colInfo.colSpan || 1)); col++) {
-							hiddenTdMaps[`${row}_${col}`] = true
+							hiddenTdMapss[`${row}_${col}`] = true
 						}
 					}
 				}
 			}
 		}
 	}
-	return hiddenTdMaps
-})
-const clearSelection = () => {
-	selectedCells.value = []
-}
-const changeShowMenu = () => {
-	showMenu.value = !showMenu.value
-}
-const isNeedShow = (row, col) => {
-	return !hiddenTdMaps[`${row}_${col}`]
+	return !hiddenTdMapss[`${row}_${col}`]
 }
 const handleCellMousedown = (e, x, y) => {
 	showMenu.value = false
