@@ -1,4 +1,5 @@
-import { createRouter, createWebHashHistory,createWebHistory,RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw } from "vue-router";
+const system =import("@/views/system/index.vue")
 
 const routes: Array<RouteRecordRaw> = [
   // {
@@ -9,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "System",
-    component: () => import("@/views/system/index.vue"),
+    component: system,
   },
   {
     path: "/systemA",
