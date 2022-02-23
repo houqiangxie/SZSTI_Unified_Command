@@ -46,6 +46,7 @@ const tableData = reactive({
 		{
 			colSpan: 1,
 			rowSpan: 2,
+			value:"EventList"
 		},
 		{
 			colSpan: 1,
@@ -206,10 +207,10 @@ const menyItemCmd = (cmd) => {
 	changeShowMenu()
 }
 
-	// 查询draggable和droppable
-const draggables = document.querySelectorAll('.draggable');
+
 let current = ''
 function dragStart(e) {
+	console.log('e.target.dataset: ', e.target.dataset);
 	current=e.target.dataset.name;
 }
 
@@ -217,11 +218,17 @@ function dragEnd() {
   this.className = 'draggable';
 }
 
-// 监听draggable的相关事件
-for (const draggable of draggables) {
-	draggable.addEventListener('dragstart', dragStart);
-	draggable.addEventListener('dragend', dragEnd);
-}
+onMounted(()=>{
+	// 查询draggable和droppable
+	const draggables = document.querySelectorAll('.draggable');
+	console.log('draggables: ', draggables);
+	// 监听draggable的相关事件
+	for (const draggable of draggables) {
+		draggable.addEventListener('dragstart', dragStart);
+		draggable.addEventListener('dragend', dragEnd);
+	}
+})
+
 
 const  dragOver=(e)=> {
 	
@@ -238,7 +245,7 @@ function dragLeave(e) {
 
 function dragDrop(e,row, col) {
 	tableData.layoutDetail[(row - 1) * tableData.cols + col - 1].value=current;
-	console.log('current: ', current);
+	console.log(tableData)
 }
 
 

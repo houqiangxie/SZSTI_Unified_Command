@@ -11,11 +11,18 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "System",
     component: () => import("@/views/system/index.vue"),
-  },
-  {
-    path: "/systemA",
-    name: "SystemA",
-    component: () => import("@/views/system/systemA.vue"),
+    children: [
+      {
+        path: "componentCenter",
+        name: "ComponentCenter",
+        component: () => import("@/views/system/ComponentCenter.vue"),
+      },
+      {
+        path: "layout",
+        name: "Layout",
+        component: () => import("@/views/system/layout.vue"),
+      },
+    ],
   },
   {
     path: "/:pathMatch(.*)*",

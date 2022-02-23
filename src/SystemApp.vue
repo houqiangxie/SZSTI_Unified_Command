@@ -1,25 +1,16 @@
 <template>
 <div>
-  <router-view></router-view>
+  <NavBar></NavBar>
+  <router-view class="h-[calc(100vh-80px)] overflow-auto w-full"></router-view>
 </div>
 </template>
 
 
 <script setup lang="ts">
+import NavBar from '@/components/system/NavBar.vue'
 //  import { useTestStore } from './store/text'
 //  const store:any =useTestStore()
   // let {testA,testB,testC}  =toRefs(store)
-  const clickBtn: (e:any) =>void=(e:any)=>{
-    console.log(e);
-  }
-  const htmlContent :string =`
-    <div>233233
-    <div>23232
-    <br/>
-      <button onclick="clickBtn">按钮</button>
-    </div>
-  </div>
-  `;
 </script>
 
 <style>
