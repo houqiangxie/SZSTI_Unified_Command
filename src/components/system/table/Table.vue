@@ -21,17 +21,9 @@
 						@dragenter.prevent.stop="e => dragEnter(e,)"
 						@drop.prevent.stop="e => dragDrop(e, row, col)"
 					>
-					<!-- {{tableData.layoutDetail[(row - 1) * tableData.cols + col - 1] && tableData.layoutDetail[(row - 1) * tableData.cols + col - 1]['value']}} -->
-							<!-- <component
-							:is="tableData.layoutDetail[(row - 1) * tableData.cols + col - 1] && tableData.layoutDetail[(row - 1) * tableData.cols + col - 1]['value']"
-							v-bind="tableData.layoutDetail[(row - 1) * tableData.cols + col - 1] && tableData.layoutDetail[(row - 1) * tableData.cols + col - 1].props"
-							v-on="tableData.layoutDetail[(row - 1) * tableData.cols + col - 1] && tableData.layoutDetail[(row - 1) * tableData.cols + col - 1].event"
-							></component
-							> -->
-							<component
-							:is="'EventList'"
-							></component
-							>
+						<component 
+						:is="componentObj[tableData.layoutDetail[(row - 1) * tableData.cols + col - 1]?.value]"
+						></component>
 					</td>
 				</tr>
 			</tbody>
@@ -40,7 +32,12 @@
 	
 </template>
 <script setup lang="ts">
-const EventList = import.meta.globEager('/src/components/system/moduleComponentList/EventList.vue')
+const files = import.meta.globEager('/src/components/system/moduleComponentList/*.vue')
+const componentObj = {}; // 轮廓线数据
+Object.keys(files).forEach((key) => {
+  const name = key.replace(/\/src\/components\/system\/moduleComponentList\/|\.vue/g,'');
+    componentObj[name]=files[key].default || files[key]
+});
 // 这块其实初始设置 tableData： {cols: 3, rows: 2} 就可以 把tabelDate设置成计算属性，layoutDetail 用js生成更方便
 const tableData = reactive({
 	cols: 3,

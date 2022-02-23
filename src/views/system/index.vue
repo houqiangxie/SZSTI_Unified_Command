@@ -16,10 +16,8 @@
 import draggable from 'vuedraggable'
 const files = import.meta.globEager('/src/components/system/moduleComponentList/*.vue')
 const componentList = []; // 轮廓线数据
-const component = {}; // 轮廓线数据
 Object.keys(files).forEach((key) => {
   const name = key.replace(/\/src\/components\/system\/moduleComponentList\/|\.vue/g,'');
-    component.name=files[key].default || files[key]
     componentList.push({ component:files[key].default || files[key],name});
 });
 
